@@ -2,8 +2,8 @@
 
 ## Run the system
 
-1. Please make port 3000 and 8888 available.
-   The system use port 3000 as UD parser and port 8888 as jupyter notebook.
+1. Please make port 8888 available.
+   The system use port 8888 as jupyter notebook.
 
 2. Install docker and docker-compose and exec a command `$docker-compose up`
 

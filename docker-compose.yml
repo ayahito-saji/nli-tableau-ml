@@ -2,8 +2,8 @@ version: '2'
 services:
   ud-parser:
     image: ayasaj/udify-http
-    ports:
-      - 3000:8888
+    expose:
+      - "8888"
   main:
     build: .
     ports:
@@ -11,4 +11,4 @@ services:
     volumes:
       - ./notebooks:/notebooks
     depends_on:
-      - udify
+      - ud-parser
