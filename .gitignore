@@ -1,2 +1,5 @@
 Thumbs.db
 .ipynb_checkpoints
+
+notebooks/data
+notebooks/model
