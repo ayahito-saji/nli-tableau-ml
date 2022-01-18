@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   ud-parser:
     image: ayasaj/udify-http
@@ -12,3 +12,9 @@ services:
       - ./notebooks:/notebooks
     depends_on:
       - ud-parser
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: 'nvidia'
+              capabilities: ['gpu']

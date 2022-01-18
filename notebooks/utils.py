@@ -86,3 +86,25 @@ def tree2tokenlist(tree, token="word"):
 # Convert Token List to Index List
 def tokenlist2indexlist(tokenlist, word2index):
     return [word2index[token] if token in word2index else word2index["_OOV_"] for token in tokenlist]
+
+
+# View Entry as Text
+def view_entry(entry):
+    return "[{}: {}]".format("T" if entry["sign"] else "F", " ".join(tree2tokenlist(entry["tree"])))
+
+# View Tableau as Text
+def view_tableau(tableau):
+    if type(tableau) is str:
+        tableau = json.loads(tableau)
+    if "root" in tableau:
+        tableau = tableau["root"]
+    retval = ""
+    retval += " ".join([view_entry(entry) for entry in tableau["entries"]]) + "\n"
+    for i, child_node in enumerate(tableau["child_nodes"]):
+        lines = view_tableau(child_node).split("\n")
+        for j, line in enumerate(lines):
+            if i == len(tableau["child_nodes"]) - 1:
+                retval += ("└" if j == 0 else "  ") + line + "\n"
+            else:
+                retval += ("├" if j == 0 else "│") + line + "\n"
+    return retval.rstrip()
