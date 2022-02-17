@@ -8,3 +8,6 @@
 2. Install docker and docker-compose and exec a command `$docker-compose up`
 
 3. After docker containers started to run, you can access to `http://127.0.0.1:8888/?token=<<THIS IS A TOKEN WHICH IS SHOWN IN YOUR CONSOLE>>`.
+
+## License
+Apache License 2.0
