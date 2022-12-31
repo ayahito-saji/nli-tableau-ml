@@ -35,12 +35,12 @@ def ud2subtree(ud, primary_idx):
             subtree.set("upos", ud["upos"][idx])
             subtree.set("sep", ud["seps"][idx])
             subtree.set("feats", ud["feats"][idx] if ud["feats"][idx] != "_" else "")
+            subtree.set("idx", str(idx))
     if len(subtree) == 1:
         subtree.remove(primary_word)
     return subtree
 
-def sentence2tree(sentence):
-    ud = udify_predict(sentence)
+def ud2tree(ud, sentence):
     seps = []
     s = " "+sentence
     for word in ud["words"]:
@@ -68,19 +68,28 @@ def sentence2tree(sentence):
             break
     return tree
 
+def sentence2tree(sentence):
+    ud = udify_predict(sentence)
+    return ud2tree(ud, sentence)
+
 # Convert Tree to Token List
 def tree2tokenlist(tree, token="word"):
+    enumerated_token_list = subtree2enumerated_tokenlist(tree, token)
+    enumerated_token_list.sort(key=lambda x: x[1])
+    return [enumerated_token[0] for enumerated_token in enumerated_token_list]
+    
+def subtree2enumerated_tokenlist(tree, token):
     if type(tree) == str:
         tree = ET.fromstring(tree)
     if len(tree) == 0:
-        return [tree.attrib[token]]
+        return [(tree.attrib[token], int(tree.attrib["idx"]))]
     else:
         retval = []
         for child in tree:
             if child.tag == "pw":
-                retval.append(tree.attrib[token])
+                retval.append((tree.attrib[token], int(tree.attrib["idx"])))
             elif child.tag == "dt":
-                retval.extend(tree2tokenlist(child, token))
+                retval.extend(subtree2enumerated_tokenlist(child, token))
         return retval
 
 # Convert Token List to Index List
