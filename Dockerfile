@@ -1,9 +1,14 @@
 FROM pytorch/pytorch:nightly-runtime-cuda9.2-cudnn7
 
-RUN pip install -U pip setuptools && pip install jupyter
+RUN apt-get update -y &&\
+    apt-get upgrade -y
 
-WORKDIR /notebooks
+RUN pip install --upgrade pip && pip install --upgrade setuptools && \
+    pip uninstall -y torch-nightly &&\
+    pip install torch==1.4.0+cu92 torchvision==0.5.0+cu92 -f https://download.pytorch.org/whl/torch_stable.html
 
-CMD jupyter notebook --port 8888 --ip 0.0.0.0 --allow-root
+RUN pip install jupyterlab
+
+CMD jupyter-lab --ip 0.0.0.0 --port 8888 --allow-root
 
 EXPOSE 8888
