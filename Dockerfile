@@ -9,6 +9,8 @@ RUN pip install --upgrade pip && pip install --upgrade setuptools && \
 
 RUN pip install jupyterlab
 
+WORKDIR /notebooks
+
 CMD jupyter-lab --ip 0.0.0.0 --port 8888 --allow-root
 
 EXPOSE 8888
