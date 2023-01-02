@@ -3,6 +3,7 @@
   "label_dict": {
     "entailment": 0,
     "neutral": 1,
-    "contradiction": 2
+    "contradiction": 2,
+    "error": -1
   }
 }

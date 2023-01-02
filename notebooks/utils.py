@@ -48,8 +48,8 @@ def ud2tree(ud, sentence):
         seps.append(s[0:idx])
         s = s[idx+len(word):]
     ud["seps"] = seps
-
-    if ud["words"][-1] == ".":
+    
+    while ud["words"][-1] == "." or ud["words"][-1] == "..":
         ud["words"] = ud["words"][:-1]
         ud["lemmas"] = ud["lemmas"][:-1]
         ud["predicted_heads"] = ud["predicted_heads"][:-1]
